@@ -13,22 +13,19 @@ public class Server {
                 System.out.println("Клиент подключен: " + socket.getInetAddress().getHostAddress());
 
                 try (InputStream inputStream = socket.getInputStream();
-                     OutputStream outputStream = socket.getOutputStream()) {
+                        OutputStream outputStream = socket.getOutputStream()) {
 
                     byte[] buffer = new byte[65536];
                     int bytesRead;
                     while ((bytesRead = inputStream.read(buffer)) != -1) {
                         String msg = new String(buffer, 0, bytesRead);
-                        if (msg.trim().equals("QUIT"))
-                            break;
                         System.out.println("СИСТЕМНОЕ СООБЩЕНИЕ: " + msg);
                         outputStream.write(msg.getBytes());
                     }
                 }
-                System.out.println("Клиент отключен");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Клиент отключен");
         }
     }
 }
